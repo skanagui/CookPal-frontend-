@@ -2,7 +2,7 @@ console.log('hello')
 const recipeListUl = document.querySelector('#recipe-list')
 
 
-fetch('https://api.spoonacular.com/recipes/complexSearch?query=italian&number=10&instructionsRequired=true&apiKey=b0d50cace88e4214aab6bf3c2bc47dac')
+fetch('https://api.spoonacular.com/recipes/complexSearch?query=italian&number=10&instructionsRequired=true&apiKey=fe134404e07a41228c1404b3d3c18bec')
   .then(response => response.json())
   .then(recipeArray => {
     renderRecipeList(recipeArray.results)
@@ -40,7 +40,7 @@ fetch('https://api.spoonacular.com/recipes/complexSearch?query=italian&number=10
     console.log(typeof idNum, idNum)  
 
 
-    fetch(`https://api.spoonacular.com/recipes/{idNum}/information&apiKey=b0d50cace88e4214aab6bf3c2bc47dac`)
+    fetch(`https://api.spoonacular.com/recipes/648279/information&apiKey=fe134404e07a41228c1404b3d3c18bec`)
     .then(response => response.json())
     .then(data => {
         console.log(data)

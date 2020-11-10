@@ -11,26 +11,56 @@
     <header>
         <h2>Site Title</h2>
       </header>
-      <nav>
+      <nav class = "cuisine-nav"> 
+        <span> Mexican</span> 
+        <span> American </span> 
+        <span> Indian </span> 
+        <span> Irish </span> 
+        <span> Italian </span> 
+        <span> Spanish </span> 
+        <span> Korean </span> 
+        <span> Latin American </span> 
+        <span> Mediterranean </span> 
+      </nav>
+
+      <nav class = "recipe-nav">
+        <h3>Recipes</h3>
         <ul id = "recipe-list">
-            <li>Recipe 1</li>
-            <li>Recipe 2</li>
-            <li>Recipe 3</li>
+        
         </ul>
       </nav>
+
+    <nav class = "my-recipe-nav"> 
+        <h3>My Recipes</h3>
+        <ul class = "my-recipe-list">
+          <li>Recipe 1</li>
+          <li>Recipe 2</li>
+      </ul>
+      </nav> 
+ 
       <main>
         <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png" alt="placeholder" style="max-width: 500px;" class ="main-image"/>
         <h1 class= "recipe-title">Recipe Title</h1>
-        <div class="info">
+        <div class="description">
           <p class= "recipe-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tempore ipsam a libero aliquam est, maxime officia et quisquam sint neque iusto reprehenderit aliquid dignissimos deserunt odit atque culpa nisi!</p>
         </div>
         <hr />
         <h3>Ingredients</h3>
         <ul class= "ingredient-list">
-          <li>Ingredient 1</li>
+          <li> 
+            <span class= "ingredient.quantity"> 
+            </span> <span class= "ingredient.unit"></span> 
+            <span class= "ingredient.name"></span>
+          </li>
           <li>Ingredient 2</li>
           <li>Ingredient 3</li>
         </ul>
+        <div class="instruction">
+          <h3>Instructions</h3>
+          <p class= "recipe-instructions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tempore ipsam a libero aliquam est, maxime officia et quisquam sint neque iusto reprehenderit aliquid dignissimos deserunt odit atque culpa nisi!</p>
+        </div>
+        <button id="favorite-btn" type="button">Favorite</button>
+        <button id="add-to-recipe-list-btn" type="button">Add to Recipe List</button>
       </main>
 
 </body>

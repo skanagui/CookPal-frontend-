@@ -58,9 +58,28 @@
           <h3>Instructions</h3>
           <p class= "recipe-instructions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tempore ipsam a libero aliquam est, maxime officia et quisquam sint neque iusto reprehenderit aliquid dignissimos deserunt odit atque culpa nisi!</p>
         </div>
-
-        <!-- <button id="add-to-recipe-list-btn" type="button">Add to Recipe List</button> -->
+        <div class="Comments">
+          <h3>Comments</h3>
+          <p class= "recipe-comments"></p>
+        </div>
+        <button id="add-to-recipe-list-btn" type="button">Add to Recipe List</button>
+        <button id="delete-btn" type="button">Delete Recipe</button>
       </main>
+
+      <button class="open-button" onclick="openForm()">Add A Comment</button>
+      
+
+      <div class="form-popup" id="myForm">
+        <form action="/action_page.php" class="form-container">
+   
+      
+          <label for="comment"><b>Comment</b></label>
+          <input type="text" placeholder="Add A Comment" name="recipe-comment" id="recipe-comment"  required>
+      
+          <button type="submit" class="btn">Add</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div>
 
 </body> 
 </html>

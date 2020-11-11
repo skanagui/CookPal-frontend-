@@ -1,4 +1,4 @@
-console.log('hello')
+//console.log('hello')
 const recipeListUl = document.querySelector('#recipe-list')
 const cuisineNav = document.querySelector('.cuisine-nav')
 
@@ -31,7 +31,7 @@ cuisineNav.addEventListener('click', (event) => {
   
   recipeListUl.innerHTML = ""
 
-   fetch(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisineL}&instructionsRequired=true&number=10&apiKey=d9fc05856dc740d7a5b96b73e51c40ba`)
+   fetch(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisineL}&instructionsRequired=true&number=10&apiKey=b0d50cace88e4214aab6bf3c2bc47dac`)
    .then(response => response.json())
    .then(recipeArray => {
      renderRecipeList(recipeArray.results)
@@ -56,6 +56,14 @@ cuisineNav.addEventListener('click', (event) => {
 
     recipeIngredientsUl.innerHTML = ""
 
+    const mainBody =document.querySelector('main')
+
+    const addToRecipeBtn = document.createElement('button')
+    addToRecipeBtn.innerText = "Add to Recipe List"
+    addToRecipeBtn.id = "add-to-recipe-list-btn"
+
+    mainBody.append(addToRecipeBtn)
+
     // console.log(recipeItem[0].ingredients)
 
 
@@ -66,19 +74,30 @@ cuisineNav.addEventListener('click', (event) => {
       </span> <span class= "ingredient.unit"> ${ingredient.unit}</span> 
       <span class= "ingredient.name">${ingredient.name}</span>
       `
+      const currentIngredientObj = {
+        name: ingredient.name, 
+        unit: ingredient.unit,
+        quantity: ingredient.amount
+      }
+      ingredientHash.push(currentIngredientObj)
+
+      
       recipeIngredientsUl.append(ingredientLi)
     })
-}
-
+    // console.log(ingredientHash)
+  }
+  
+  let ingredientHash = []
+  
   recipeListUl.addEventListener('click', (event) => {
 
-    console.log(event.target)  
+    // console.log(event.target)  
     let id = event.target.dataset.id
     let idNum = parseInt(id)
     // console.log(typeof idNum, idNum)  
 
 
-    fetch(`https://api.spoonacular.com/recipes/informationBulk?apiKey=d9fc05856dc740d7a5b96b73e51c40ba&ids=${idNum}`)
+    fetch(`https://api.spoonacular.com/recipes/informationBulk?apiKey=b0d50cace88e4214aab6bf3c2bc47dac&ids=${idNum}`)
     .then(response => response.json())       
     .then(recipeItem => {
       renderBody(recipeItem)
@@ -86,43 +105,76 @@ cuisineNav.addEventListener('click', (event) => {
         // console.log(recipeItem[0].title)
     });
    
+    const addButton = document.querySelector('#add-to-recipe-list-btn')
+    
+    addButton.addEventListener('click', (event) => {
+      const rImage = document.querySelector('.main-image').src
+      const rTitle= document.querySelector('.recipe-title').innerText
+      const rDescription = document.querySelector('.recipe-description').innerText
+      //const rIngredientsUl = document.querySelector('.ingredient-list').innerText
+      const rInstructions = document.querySelector('.recipe-instructions').innerText
+    
+    
+      // console.log(rImage)
+    
+      const recipeObj = {
+        name: rTitle, 
+        description: rDescription, 
+        image: rImage, 
+        instructions: rInstructions, 
+        comment: ""
+      }
+    
+          fetch('http://localhost:3000/api/v1/recipes', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(recipeObj),
+        })
+        .then(response => response.json())
+        .then(newRecipeObject => {
+          renderMyRecipeList(newRecipeObject)
+          // console.log('Success:', newRecipeObject);
+        })
+    
+       const myRecipeUl = document.querySelector('.my-recipe-list')
+      //  const ulInnerText = myRecipeUl.innerText 
+       const ulLastChild = myRecipeUl.lastElementChild.dataset.id
+       const recipeId = parseInt(ulLastChild) + 1
+      //  console.log(ulLastChild)
+        // debugger
+        ingredientHash.forEach((ingredient)  => {
+          const ingredientObj= {
+            name: ingredient.name, 
+            quantity: ingredient.quantity, 
+            unit: ingredient.unit, 
+            recipe_id: recipeId
+          }
+    
+          console.log(ingredientObj)
+    
+          //  debugger
+          fetch('http://localhost:3000/api/v1/ingredients', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(ingredientObj)
+          })
+        
+          .then(response => response.json())
+          .then(newIngredientObj => {
+            console.log('Success:', newIngredientObj);
+          })
+    
+        })
+    
+    })
   })
   
 
-const addButton = document.querySelector('#add-to-recipe-list-btn')
 
-addButton.addEventListener('click', (event) => {
-  const rImage = document.querySelector('.main-image').src
-  const rTitle= document.querySelector('.recipe-title').innerText
-  const rDescription = document.querySelector('.recipe-description').innerText
-  //const rIngredientsUl = document.querySelector('.ingredient-list').innerText
-  const rInstructions = document.querySelector('.recipe-instructions').innerText
-
-
-  console.log(rImage)
-
-  const recipeObj = {
-    name: rTitle, 
-    description: rDescription, 
-    image: rImage, 
-    instructions: rInstructions 
-  }
-
-      fetch('http://localhost:3000/api/v1/recipes', {
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(recipeObj),
-    })
-    .then(response => response.json())
-    .then(newRecipeObject => {
-      renderMyRecipeList(newRecipeObject)
-      console.log('Success:', newRecipeObject);
-    })
-
-
-})
 
 const myRecipeList =document.querySelector('.my-recipe-list')
 

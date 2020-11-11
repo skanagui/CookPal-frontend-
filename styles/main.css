@@ -5,7 +5,8 @@ body {
     grid-template-areas: 
       "header header header"
       "menu menu  menu"
-      "nav main  right" ;
+      "nav main  right"
+      "nav main  footer" ;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 80px 1fr;
     row-gap: 10px;

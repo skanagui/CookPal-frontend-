@@ -2,31 +2,42 @@ console.log('hello')
 const recipeListUl = document.querySelector('#recipe-list')
 const cuisineNav = document.querySelector('.cuisine-nav')
 
-const renderRecipeList = (recipeArray) => {
-    // recipeListUl.innerHTML = ""
-    recipeArray.forEach(renderARecipe)
-}
 
-const renderARecipe = (recipe) => {
-    const recipeLi = document.createElement("li")
-    recipeLi.innerText= recipe.title
-    recipeLi.dataset.id= recipe.id
-    recipeListUl.append(recipeLi)
-}
+fetch('http://localhost:3000/api/v1/recipes')
+  .then(response => response.json())
+  .then(myRecipeListArray => {
+    mRList(myRecipeListArray)
+  })
+
+
+
+  const renderRecipeList = (recipeArray) => {
+      // recipeListUl.innerHTML = ""
+      recipeArray.forEach(renderARecipe)
+  }
+
+  const renderARecipe = (recipe) => {
+      const recipeLi = document.createElement("li")
+      recipeLi.innerText= recipe.title
+      recipeLi.dataset.id= recipe.id
+      recipeListUl.append(recipeLi)
+  }
 
 cuisineNav.addEventListener('click', (event) => {
+  if (event.target.matches('span')){
   const cuisine = event.target.innerText
   const cuisineL = cuisine.toLowerCase()
-  console.log(cuisineL)
+  // console.log(cuisineL)
   
   recipeListUl.innerHTML = ""
 
-   fetch(`https://api.spoonacular.com/recipes/random?number=10&tags=${cuisineL}&apiKey=d9fc05856dc740d7a5b96b73e51c40ba`)
+   fetch(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisineL}&instructionsRequired=true&number=10&apiKey=d9fc05856dc740d7a5b96b73e51c40ba`)
    .then(response => response.json())
    .then(recipeArray => {
-     renderRecipeList(recipeArray.recipes)
-     console.log(recipeArray.recipes)
+     renderRecipeList(recipeArray.results)
+    //  console.log(recipeArray)
     });
+  }
   })
 
 
@@ -60,19 +71,69 @@ cuisineNav.addEventListener('click', (event) => {
 }
 
   recipeListUl.addEventListener('click', (event) => {
+
     console.log(event.target)  
     let id = event.target.dataset.id
     let idNum = parseInt(id)
-    console.log(typeof idNum, idNum)  
+    // console.log(typeof idNum, idNum)  
 
 
     fetch(`https://api.spoonacular.com/recipes/informationBulk?apiKey=d9fc05856dc740d7a5b96b73e51c40ba&ids=${idNum}`)
     .then(response => response.json())       
     .then(recipeItem => {
       renderBody(recipeItem)
-        console.log(recipeItem)
-        console.log(recipeItem[0].title)
+        // console.log(recipeItem)
+        // console.log(recipeItem[0].title)
     });
-
+   
   })
+  
+
+const addButton = document.querySelector('#add-to-recipe-list-btn')
+
+addButton.addEventListener('click', (event) => {
+  const rImage = document.querySelector('.main-image').src
+  const rTitle= document.querySelector('.recipe-title').innerText
+  const rDescription = document.querySelector('.recipe-description').innerText
+  //const rIngredientsUl = document.querySelector('.ingredient-list').innerText
+  const rInstructions = document.querySelector('.recipe-instructions').innerText
+
+
+  console.log(rImage)
+
+  const recipeObj = {
+    name: rTitle, 
+    description: rDescription, 
+    image: rImage, 
+    instructions: rInstructions 
+  }
+
+      fetch('http://localhost:3000/api/v1/recipes', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recipeObj),
+    })
+    .then(response => response.json())
+    .then(newRecipeObject => {
+      renderMyRecipeList(newRecipeObject)
+      console.log('Success:', newRecipeObject);
+    })
+
+
+})
+
+const myRecipeList =document.querySelector('.my-recipe-list')
+
+const mRList = (myRecipeArray) => {
+  myRecipeArray.forEach(renderMyRecipeList)
+}
+
+const renderMyRecipeList = (newRecipeObject) => {
+  const myRecipeLi = document.createElement("li")
+  myRecipeLi.innerText= newRecipeObject.name
+  myRecipeLi.dataset.id= newRecipeObject.id
+  myRecipeList.append(myRecipeLi)
+}
 

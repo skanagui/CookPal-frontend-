@@ -8,7 +8,7 @@ const commentForm = document.querySelector('.form-container')
 
 
 
-fetch(`http://localhost:3000/api/v1/recipes/21`)
+fetch(`http://localhost:3000/api/v1/recipes/30`)
 .then(response => response.json())
 .then(myCurrentRecipe => {
   renderMyRecipeBody(myCurrentRecipe)
@@ -61,11 +61,15 @@ cuisineNav.addEventListener('click', (event) => {
    const recipeIngredientsUl = document.querySelector('.ingredient-list')
    const recipeInstructions = document.querySelector('.recipe-instructions')
    
-
+    const currentDescription = recipeItem[0].summary
+    const newDescription = currentDescription.replace(/[^\w\s]/gi,' ');
+    const currentInstruction = recipeItem[0].instructions
+    const newInstruction = currentInstruction.replace(/[^\w\s]/gi,' ');
+    
    recipeImage.src= recipeItem[0].image
     recipeTitle.innerText= recipeItem[0].title
-    recipeDescription.innerText= recipeItem[0].summary
-    recipeInstructions.innerText= recipeItem[0].instructions
+    recipeDescription.innerText= newDescription
+    recipeInstructions.innerText= newInstruction
 
     recipeIngredientsUl.innerHTML = ""
 
@@ -99,7 +103,7 @@ cuisineNav.addEventListener('click', (event) => {
   recipeListUl.addEventListener('click', (event) => {
 
     // console.log(event.target)  
-    let id = event.target.dataset.id
+    let id = event.target.id
     let idNum = parseInt(id)
     // console.log(typeof idNum, idNum)  
 
@@ -150,7 +154,7 @@ cuisineNav.addEventListener('click', (event) => {
    
       const myRecipeUl  = document.querySelector('.my-recipe-list')
      //  const ulInnerText = myRecipeUl.innerText 
-      const ulLastChild = myRecipeUl.lastElementChild.dataset.id
+      const ulLastChild = myRecipeUl.lastElementChild.id
       const recipeId = parseInt(ulLastChild) + 1
      //  console.log(ulLastChild)
        // debugger
@@ -218,13 +222,22 @@ const renderMyRecipeBody = (myCurrentRecipe) => {
   const recipeCommentSection = document.querySelector('.recipe-comments')
   // const addButton = document.querySelector('#add-to-recipe-list-btn')
   // const deleteButton = document.querySelector('#delete-btn')
+
+  const orgDescription = myCurrentRecipe.description
+  // const newDescription = orgDescription.replace(/\<b>/\</b>/gi,' ');
+  const newDescription = orgDescription.replace(/[^\w\s]/gi,' ');
+  // console.log(newDescription)
+
+  const orgInstructions= myCurrentRecipe.instructions
+  const newInstructions = orgInstructions.replace(/[^\w\s]/gi,' ');
+  // console.log(newDescription)
   
 
   recipeImage.src = myCurrentRecipe.image
    recipeTitle.innerText = myCurrentRecipe.name
    recipeTitle.dataset.id = myCurrentRecipe.id
-   recipeDescription.innerText = myCurrentRecipe.description
-   recipeInstructions.innerText= myCurrentRecipe.instructions
+   recipeDescription.innerText = newDescription
+   recipeInstructions.innerText= newInstructions
    recipeCommentSection.innerText= myCurrentRecipe.comment
 
    recipeIngredientsUl.innerHTML = ""

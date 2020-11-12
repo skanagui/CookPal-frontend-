@@ -3,33 +3,58 @@ body {
     padding: 0;
     display: grid;
     grid-template-areas: 
+      /* "header header header" */
       "header header header"
       "menu menu  menu"
       "nav main  right"
-      "nav main  footer" ;
+      "other main  footer" ;
     grid-template-columns: 300px 1fr;
-    grid-template-rows: 80px 1fr;
+    grid-template-rows: 100px 1fr;
     row-gap: 10px;
     column-gap: 15px;
+    /* color: white; */
+    text-shadow: 2x 2px white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
   }
+
+
 
   header {
     grid-area: header;
-    border: 2px solid red;
+    text-align: left; 
+    vertical-align: top;
+    font-family: 'Sofia', cursive;
+    font-size: 30px;
+    font-weight: bold; 
+    position: sticky;
+    /* top: 0;
+    background-color: white */
+  
   }
   
   main {
+    background-color: rgba(255, 255, 255, 0.7); 
     grid-area: main;
-    border: 2px solid blue;
+    /* opacity: 0.6 */
+    padding: 10px;
+    border-radius: 25px; 
   }
+
+  main img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    overflow: auto;
+    border-radius: 25px;
+  }
+
 
   p {
     margin-top:-5px;
   }
 
-  span {
-    padding:5px;
-  }
+ 
 
   h3 {
     margin-block-end:0.5em;  
@@ -39,18 +64,53 @@ body {
   
   .recipe-nav {
     grid-area: nav;
-    border: 2px solid green;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 25px; 
+
+  }
+
+  .recipe-nav li:hover {
+    background-color: white;
+    color: rgb(83, 83, 83)
+   }
+
+  .recipe-nav h3{
+   text-align: center;
   }
 
   .cuisine-nav {
     grid-area: menu;
-    border: 2px solid purple;
+    border: 2px solid black;
+    padding: 10px; 
+    font-size: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: black; 
+    color: white
   }
 
+  .cuisine-nav span:hover{
+   /* background-color: black; */
+   color: rgb(146, 162, 214)
+  }
+
+  
   .my-recipe-nav {
     grid-area: right;
-    border: 2px solid pink;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 25px; 
   }
+
+  .my-recipe-nav li:hover {
+   color: rgb(83, 83, 83);
+   background-color: white
+  }
+
+  .my-recipe-nav h3{
+   text-align: center;
+  }
+
 
   /* .comments{
     grid-area: footer;
@@ -71,18 +131,20 @@ body {
   bottom: 23px;
   right: 28px;
   width: 280px;
+  border-radius: 25px; 
 }
 
 /* The popup form - hidden by default */
 .form-popup {
   grid-area: footer;
-  border: 2px solid orange;
+  /* border: 2px solid orange; */
   display: none;
   position: fixed;
   bottom: 0;
   right: 15px;
-  border: 3px solid #f1f1f1;
+  /* border: 3px solid #f1f1f1; */
   z-index: 9;
+  
 }
 
 /* Add styles to the form container */
@@ -90,41 +152,83 @@ body {
   max-width: 300px;
   padding: 10px;
   background-color: white;
+  border-radius: 25px; 
 }
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
+  width: 80%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  /* margin: 5px 0 22px 0; */
   border: none;
-  background: #f1f1f1;
+  background: #f8faf8;
+  border-radius: 25px; 
 }
 
 /* When the inputs get focus, do something */
 .form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
+  background-color: rgb(253, 253, 253);
   outline: none;
+  border-radius: 25px; 
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #b0e2b1;
+  background-color: rgba(176, 176, 177, 0.966);
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
   margin-bottom:10px;
-  opacity: 0.8;
+  opacity: 1;
+  border-radius: 25px; 
 }
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
-  background-color: rgb(236, 183, 183);
+  background-color: rgb(170, 17, 17);
 }
 
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+  opacity: .6;
 }
+
+.my-recipe-list {
+  list-style-type: none;
+  /* background-color: rgba(255, 255, 255, 0.5);  */
+}
+
+/* 
+.my-recipe-list li:before  {
+   background-image: url('https://img.favpng.com/7/19/22/spoon-fork-knife-cutlery-png-favpng-Tpu6QyQTCPnHxAB6GzWZpf04E.jpg');
+  content: '';
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+   background-size: 18px;
+   background-repeat: no-repeat;
+   margin-right: 10px;
+
+} */
+
+#recipe-list {
+  list-style-type: none;
+
+  
+}
+
+
+/* #recipe-list li:before  {
+   background-image: url('data:image/png;base64,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');
+  content: '';
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+   background-size: 18px;
+   background-repeat: no-repeat;
+   margin-right: 10px;
+
+
+} */

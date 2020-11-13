@@ -77,6 +77,7 @@ cuisineNav.addEventListener('click', (event) => {
 
     // console.log(recipeItem[0].ingredients)
 
+    ingredientHash = []
 
     recipeItem[0].extendedIngredients.forEach(ingredient => {
       const ingredientLi = document.createElement('li')

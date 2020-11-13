@@ -90,6 +90,10 @@ body {
     color: white
   }
 
+  .cuisine-nav span{
+      padding: 5px
+  }
+
   .cuisine-nav span:hover{
    /* background-color: black; */
    color: rgb(146, 162, 214)
